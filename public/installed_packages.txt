@@ -1,0 +1,16 @@
+
+# server side
+npm i express cors dotenv mongoose jsonwebtoken bcryptjs multer helmet morgan express-rate-limit nodemailer joi
+npm i cloudinary
+npm i -D nodemon
+npm i better-auth
+
+# client side
+npx create-next-app@latest nur_dynamic_profile_client (here ts not used, here used js)
+npm i @better-auth/react lucide-react react-hook-form @hookform/resolvers zod recharts axios @tanstack/react-query canvas-confetti
+npm install next-cloudinary
+npm i tailwind-merge clsx react-toastify
+npm i -D tailwindcss postcss autoprefixer
+npm install react-icons --save
+
+
