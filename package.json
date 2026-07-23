@@ -9,15 +9,32 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.4.0",
+    "@tanstack/react-query": "^5.101.4",
+    "axios": "^1.18.1",
+    "better-auth": "^1.6.25",
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "imgbb-uploader": "^1.5.1",
+    "lucide-react": "^1.26.0",
     "next": "16.2.11",
+    "next-cloudinary": "^6.17.5",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-hook-form": "^7.82.0",
+    "react-icons": "^5.7.0",
+    "react-toastify": "^11.1.0",
+    "recharts": "^3.10.0",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "autoprefixer": "^10.5.4",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.11",
-    "tailwindcss": "^4"
+    "postcss": "^8.5.22",
+    "tailwindcss": "^4.3.3"
   }
 }
