@@ -5,6 +5,7 @@ import { useSession, authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { Uploader } from "@/components/shared/Uploader";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -39,6 +40,10 @@ export default function ProfilePage() {
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleImageUpload = (url) => {
+    setFormData(prev => ({ ...prev, profileImage: url }));
   };
 
   const handleSubmit = async (e) => {
@@ -139,14 +144,15 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-primary">Profile Image URL</label>
-                  <input
-                    name="profileImage"
-                    type="url"
-                    className="mt-1 appearance-none block w-full px-3 py-2 border border-border-subtle rounded-md bg-bg-base text-text-primary focus:outline-none focus:ring-accent-accepted sm:text-sm"
-                    value={formData.profileImage}
-                    onChange={handleChange}
-                  />
+                  <label className="block text-sm font-medium text-text-primary">Profile Image</label>
+                  <div className="mt-1 flex flex-col gap-4">
+                    {formData.profileImage && (
+                      <div className="h-16 w-16 rounded-full overflow-hidden border border-border-subtle shrink-0">
+                        <img src={formData.profileImage} alt="Preview" className="h-full w-full object-cover" />
+                      </div>
+                    )}
+                    <Uploader fileType="image" onUploadSuccess={handleImageUpload} />
+                  </div>
                 </div>
               </div>
 

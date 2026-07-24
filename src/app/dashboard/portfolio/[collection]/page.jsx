@@ -22,7 +22,9 @@ export default function PortfolioCollectionPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}`, {
+        credentials: 'include'
+      });
       if (res.ok) {
         const json = await res.json();
         setData(json);
@@ -46,6 +48,7 @@ export default function PortfolioCollectionPage() {
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(formData)
       });
       if (res.ok) {
@@ -66,7 +69,8 @@ export default function PortfolioCollectionPage() {
     setError(null);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials: 'include'
       });
       if (res.ok) {
         fetchData();

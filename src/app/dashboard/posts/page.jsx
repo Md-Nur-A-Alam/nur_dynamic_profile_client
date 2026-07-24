@@ -28,7 +28,9 @@ export default function PostsDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts`, {
+        credentials: 'include'
+      });
       if (res.ok) {
         const json = await res.json();
         // The endpoint returns { data: [...posts] }
@@ -49,6 +51,7 @@ export default function PostsDashboard() {
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(formData)
       });
       if (res.ok) {
@@ -66,7 +69,8 @@ export default function PostsDashboard() {
   const handleDelete = async (id) => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials: 'include'
       });
       if (res.ok) {
         fetchData();
