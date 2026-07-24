@@ -49,7 +49,7 @@ export default function LoginPage() {
     try {
       const { error } = await signIn.social({
         provider: "google",
-        callbackURL: "/callback",
+        callbackURL: `${window.location.origin}/callback`,
       });
       if (error) setError(error.message);
     } catch (err) {
