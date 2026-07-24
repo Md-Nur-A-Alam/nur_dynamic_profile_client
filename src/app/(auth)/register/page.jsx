@@ -45,7 +45,7 @@ export default function RegisterPage() {
         if (data?.user?.role === "admin") {
           router.push("/dashboard");
         } else {
-          router.push("/posts");
+          router.push("/");
         }
       }
     } catch (err) {

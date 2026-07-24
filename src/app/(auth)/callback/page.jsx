@@ -14,7 +14,7 @@ export default function AuthCallback() {
       if (session?.user?.role === "admin") {
         router.push("/dashboard");
       } else {
-        router.push("/posts");
+        router.push("/");
       }
     }
   }, [session, isPending, router]);

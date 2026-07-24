@@ -34,7 +34,7 @@ export default function LoginPage() {
         if (data?.user?.role === "admin") {
           router.push("/dashboard");
         } else {
-          router.push("/posts");
+          router.push("/");
         }
       }
     } catch (err) {
