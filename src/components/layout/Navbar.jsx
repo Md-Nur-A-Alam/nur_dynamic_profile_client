@@ -113,6 +113,13 @@ export default function Navbar() {
                         Dashboard
                       </Link>
                     )}
+                    <Link 
+                      href="/profile" 
+                      className="block px-4 py-2 text-sm text-text-primary hover:bg-bg-base transition-colors"
+                      onClick={() => setProfileMenuOpen(false)}
+                    >
+                      Profile
+                    </Link>
                     <button 
                       onClick={async () => {
                         await signOut();
@@ -182,6 +189,9 @@ export default function Navbar() {
                     Dashboard
                   </Link>
                 )}
+                <Link href="/profile" onClick={() => setMenuOpen(false)} className="text-base font-medium text-text-primary py-1">
+                  Profile
+                </Link>
                 <button 
                   onClick={async () => {
                     await signOut();
