@@ -1,25 +1,28 @@
-import { redirect } from 'next/navigation';
-import { headers } from 'next/headers';
-import Link from 'next/link';
+"use client";
 
-export default async function DashboardLayout({ children }) {
-  const reqHeaders = await headers();
-  let session = null;
-  
-  try {
-    const res = await fetch(`${process.env.SERVER_BASE_URL}/api/auth/get-session`, {
-      headers: { cookie: reqHeaders.get('cookie') || '' }
-    });
-    if (res.ok) {
-      session = await res.json();
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useSession } from '@/lib/auth-client';
+
+export default function DashboardLayout({ children }) {
+  const router = useRouter();
+  const { data: session, isPending } = useSession();
+
+  useEffect(() => {
+    if (!isPending) {
+      if (!session || !session.user || session.user.role !== 'admin') {
+        router.push('/login');
+      }
     }
-  } catch (err) {
-    console.error("Failed to fetch session for dashboard guard:", err);
+  }, [session, isPending, router]);
+
+  if (isPending) {
+    return <div className="min-h-screen flex items-center justify-center bg-bg-base text-text-primary">Loading dashboard...</div>;
   }
 
-  // Server-side guard
   if (!session || !session.user || session.user.role !== 'admin') {
-    redirect('/login');
+    return null; // Will redirect in useEffect
   }
 
   const collections = [
