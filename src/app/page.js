@@ -9,7 +9,7 @@ import Contact from '@/components/sections/Contact';
 
 async function fetchCollection(collectionName) {
   try {
-    const baseUrl = process.env.SERVER_BASE_URL || 'http://localhost:8000';
+    const baseUrl = process.env.SERVER_BASE_URL;
     const res = await fetch(`${baseUrl}/api/portfolio/${collectionName}`, { 
       next: { revalidate: 60 } 
     });

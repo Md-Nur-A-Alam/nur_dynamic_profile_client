@@ -11,7 +11,7 @@ import { Reveal } from '@/components/ui/Reveal';
 
 async function fetchProject(id) {
   try {
-    const baseUrl = process.env.SERVER_BASE_URL || 'http://localhost:8000';
+    const baseUrl = process.env.SERVER_BASE_URL;
     const res = await fetch(`${baseUrl}/api/portfolio/projects/${id}`, { 
       next: { revalidate: 60 } 
     });

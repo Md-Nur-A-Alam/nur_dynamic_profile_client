@@ -22,7 +22,7 @@ export default function PortfolioCollectionPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/portfolio/${collection}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}`);
       if (res.ok) {
         const json = await res.json();
         setData(json);
@@ -38,7 +38,7 @@ export default function PortfolioCollectionPage() {
 
   const handleSave = async (formData) => {
     const isEditing = !!formData._id;
-    const url = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/portfolio/${collection}${isEditing ? `/${formData._id}` : ''}`;
+    const url = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}${isEditing ? `/${formData._id}` : ''}`;
     const method = isEditing ? 'PUT' : 'POST';
     setError(null);
 
@@ -65,7 +65,7 @@ export default function PortfolioCollectionPage() {
   const handleDelete = async (id) => {
     setError(null);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/portfolio/${collection}/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {

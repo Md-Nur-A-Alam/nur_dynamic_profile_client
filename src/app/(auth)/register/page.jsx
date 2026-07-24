@@ -42,7 +42,11 @@ export default function RegisterPage() {
       if (error) {
         setError(error.message || "Failed to register");
       } else {
-        router.push("/posts");
+        if (data?.user?.role === "admin") {
+          router.push("/dashboard");
+        } else {
+          router.push("/posts");
+        }
       }
     } catch (err) {
       setError("An unexpected error occurred.");
@@ -56,7 +60,7 @@ export default function RegisterPage() {
     try {
       const { error } = await signIn.social({
         provider: "google",
-        callbackURL: "/posts",
+        callbackURL: "/callback",
       });
       if (error) setError(error.message);
     } catch (err) {

@@ -28,7 +28,7 @@ export default function PostsDashboard() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/social/posts`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts`);
       if (res.ok) {
         const json = await res.json();
         // The endpoint returns { data: [...posts] }
@@ -42,7 +42,7 @@ export default function PostsDashboard() {
 
   const handleSave = async (formData) => {
     const isEditing = !!formData._id;
-    const url = `http://localhost:8000/api/social/posts${isEditing ? `/${formData._id}` : ''}`;
+    const url = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts${isEditing ? `/${formData._id}` : ''}`;
     const method = isEditing ? 'PUT' : 'POST';
 
     try {
@@ -65,7 +65,7 @@ export default function PostsDashboard() {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/social/posts/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts/${id}`, {
         method: 'DELETE'
       });
       if (res.ok) {

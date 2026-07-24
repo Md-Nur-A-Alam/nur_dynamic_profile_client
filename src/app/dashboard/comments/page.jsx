@@ -18,7 +18,7 @@ export default function CommentsDashboard() {
       // The current backend gets comments by postId. We'll use a new admin route.
       // Wait, let's check if there's an endpoint to get all comments for moderation.
       // If not, we will display a placeholder until the backend supports it.
-      const res = await fetch(`http://localhost:8000/api/social/comments`); 
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/comments`);
       if (res.ok) {
         const json = await res.json();
         setData(json.data || json);
@@ -33,7 +33,7 @@ export default function CommentsDashboard() {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:8000/api/social/comments/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/comments/${id}`, {
         method: 'DELETE' // Actually commentController doesn't have delete by id endpoint without user restriction.
       });
       if (res.ok) {
@@ -53,10 +53,10 @@ export default function CommentsDashboard() {
       {loading ? (
         <div className="text-text-muted animate-pulse">Loading...</div>
       ) : (
-        <DataTable 
-          data={data} 
-          onEdit={() => alert("Editing comments is not supported in moderation view.")} 
-          onDelete={handleDelete} 
+        <DataTable
+          data={data}
+          onEdit={() => alert("Editing comments is not supported in moderation view.")}
+          onDelete={handleDelete}
         />
       )}
     </div>

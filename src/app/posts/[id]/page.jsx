@@ -8,7 +8,7 @@ import { CommentSection } from "@/components/social/CommentSection";
 
 async function fetchPost(id) {
   try {
-    const baseUrl = process.env.SERVER_BASE_URL || 'http://localhost:8000';
+    const baseUrl = process.env.SERVER_BASE_URL;
     const res = await fetch(`${baseUrl}/api/social/posts/${id}`, {
       next: { revalidate: 60 }
     });

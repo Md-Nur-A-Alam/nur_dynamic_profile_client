@@ -18,7 +18,7 @@ export function CommentSection({ postId }) {
   const { data: comments = [] } = useQuery({
     queryKey: ['comments', postId],
     queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/social/posts/${postId}/comments`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts/${postId}/comments`);
       if (!res.ok) return [];
       const json = await res.json();
       return json.data || [];
@@ -29,7 +29,7 @@ export function CommentSection({ postId }) {
   const submitComment = useMutation({
     mutationFn: async (text) => {
       setErrorMsg("");
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/social/comments`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ postId, text })

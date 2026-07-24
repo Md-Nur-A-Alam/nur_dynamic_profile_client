@@ -5,12 +5,13 @@ import { ThemeToggle } from './ThemeToggle';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { useSession } from '@/lib/auth-client';
+import { useSession, signOut } from '@/lib/auth-client';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const { data: session } = useSession();
   
   const { scrollYProgress } = useScroll();
@@ -84,9 +85,47 @@ export default function Navbar() {
           <div className="ml-2 pl-4 border-l border-border-subtle flex items-center gap-4">
             <ThemeToggle />
             {session ? (
-              <Link href="/dashboard" className="text-sm font-medium text-text-primary hover:text-accent-accepted">
-                Dashboard
-              </Link>
+              <div className="relative">
+                <button 
+                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                  onBlur={() => setTimeout(() => setProfileMenuOpen(false), 200)}
+                  className="flex items-center gap-2 focus-visible:outline-none"
+                >
+                  <img 
+                    src={session.user?.image || "https://ui-avatars.com/api/?name=" + encodeURIComponent(session.user?.name || "User")} 
+                    alt="Profile" 
+                    className="w-8 h-8 rounded-full border border-border-subtle object-cover"
+                  />
+                </button>
+                
+                {profileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-surface-raised border border-border-subtle rounded-md shadow-lg py-1 z-50">
+                    <div className="px-4 py-2 border-b border-border-subtle mb-1">
+                      <p className="text-sm font-medium text-text-primary truncate">{session.user?.name}</p>
+                      <p className="text-xs text-text-muted truncate">{session.user?.email}</p>
+                    </div>
+                    {session.user?.role === 'admin' && (
+                      <Link 
+                        href="/dashboard" 
+                        className="block px-4 py-2 text-sm text-text-primary hover:bg-bg-base transition-colors"
+                        onClick={() => setProfileMenuOpen(false)}
+                      >
+                        Dashboard
+                      </Link>
+                    )}
+                    <button 
+                      onClick={async () => {
+                        await signOut();
+                        setProfileMenuOpen(false);
+                        window.location.href = "/";
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-accent-wrong hover:bg-bg-base transition-colors"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link href="/login" className="text-sm font-medium text-text-primary hover:text-accent-accepted">
                 Login
@@ -126,9 +165,34 @@ export default function Navbar() {
           ))}
           <div className="border-t border-border-subtle pt-2 mt-2">
             {session ? (
-              <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="text-base font-medium text-text-primary block py-2">
-                Dashboard
-              </Link>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-3 mb-2">
+                  <img 
+                    src={session.user?.image || "https://ui-avatars.com/api/?name=" + encodeURIComponent(session.user?.name || "User")} 
+                    alt="Profile" 
+                    className="w-10 h-10 rounded-full border border-border-subtle object-cover"
+                  />
+                  <div>
+                    <p className="text-sm font-medium text-text-primary">{session.user?.name}</p>
+                    <p className="text-xs text-text-muted">{session.user?.email}</p>
+                  </div>
+                </div>
+                {session.user?.role === 'admin' && (
+                  <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="text-base font-medium text-text-primary py-1">
+                    Dashboard
+                  </Link>
+                )}
+                <button 
+                  onClick={async () => {
+                    await signOut();
+                    setMenuOpen(false);
+                    window.location.href = "/";
+                  }}
+                  className="text-left text-base font-medium text-accent-wrong py-1"
+                >
+                  Logout
+                </button>
+              </div>
             ) : (
               <Link href="/login" onClick={() => setMenuOpen(false)} className="text-base font-medium text-text-primary block py-2">
                 Login

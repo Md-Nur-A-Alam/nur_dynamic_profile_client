@@ -25,7 +25,7 @@ export function ReactionBar({ postId }) {
   const { data: reactions = [] } = useQuery({
     queryKey: ['reactions', postId],
     queryFn: async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/social/posts/${postId}/reactions`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts/${postId}/reactions`);
       if (!res.ok) return [];
       const json = await res.json();
       return json.data || [];
@@ -41,14 +41,14 @@ export function ReactionBar({ postId }) {
       
       if (existing && existing.type === type) {
         // Remove
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/social/posts/${postId}/reactions`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/posts/${postId}/reactions`, {
           method: 'DELETE',
         });
         if (!res.ok) throw new Error('Failed to remove reaction');
         return null;
       } else {
         // Create/Update
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/social/reactions`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/social/reactions`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ postId, type })
