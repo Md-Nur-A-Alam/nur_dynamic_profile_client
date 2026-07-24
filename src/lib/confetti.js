@@ -7,6 +7,10 @@ export function triggerConfetti(force = false) {
   if (hasInteractedThisSession && !force) return;
   if (!force) hasInteractedThisSession = true;
 
+  if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return;
+  }
+
   const accentAccepted = getComputedStyle(document.documentElement)
     .getPropertyValue("--color-accent-accepted")
     .trim();

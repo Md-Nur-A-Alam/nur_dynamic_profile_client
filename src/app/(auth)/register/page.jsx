@@ -85,9 +85,10 @@ export default function RegisterPage() {
           <div className="bg-surface-raised py-8 px-4 border border-border-subtle rounded-xl sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm font-medium text-text-primary">Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-text-primary">Name</label>
                 <div className="mt-1">
                   <input
+                    id="name"
                     name="name"
                     type="text"
                     required
@@ -99,9 +100,10 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-text-primary">Email address</label>
+                <label htmlFor="email" className="block text-sm font-medium text-text-primary">Email address</label>
                 <div className="mt-1">
                   <input
+                    id="email"
                     name="email"
                     type="email"
                     required
@@ -113,9 +115,10 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-text-primary">Password</label>
+                <label htmlFor="password" className="block text-sm font-medium text-text-primary">Password</label>
                 <div className="mt-1">
                   <input
+                    id="password"
                     name="password"
                     type="password"
                     required
@@ -127,9 +130,10 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-text-primary">Occupation (Optional)</label>
+                <label htmlFor="occupation" className="block text-sm font-medium text-text-primary">Occupation (Optional)</label>
                 <div className="mt-1">
                   <input
+                    id="occupation"
                     name="occupation"
                     type="text"
                     className="appearance-none block w-full px-3 py-2 border border-border-subtle rounded-md bg-bg-base text-text-primary focus:outline-none focus:ring-accent-accepted focus:border-accent-accepted sm:text-sm"
@@ -140,9 +144,10 @@ export default function RegisterPage() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-text-primary">Profile Image URL (Optional)</label>
+                <label htmlFor="profileImage" className="block text-sm font-medium text-text-primary">Profile Image URL (Optional)</label>
                 <div className="mt-1">
                   <input
+                    id="profileImage"
                     name="profileImage"
                     type="url"
                     className="appearance-none block w-full px-3 py-2 border border-border-subtle rounded-md bg-bg-base text-text-primary focus:outline-none focus:ring-accent-accepted focus:border-accent-accepted sm:text-sm"

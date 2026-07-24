@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "set NODE_OPTIONS=--max-old-space-size=8192 && next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },
@@ -15,6 +15,7 @@
     "better-auth": "^1.6.25",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
     "framer-motion": "^12.42.2",
     "imgbb-uploader": "^1.5.1",
     "lucide-react": "^1.26.0",

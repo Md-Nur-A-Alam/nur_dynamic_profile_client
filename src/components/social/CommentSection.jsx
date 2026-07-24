@@ -12,6 +12,7 @@ export function CommentSection({ postId }) {
   const queryClient = useQueryClient();
   const [commentText, setCommentText] = useState("");
   const [showGate, setShowGate] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Fetch comments
   const { data: comments = [] } = useQuery({
@@ -27,6 +28,7 @@ export function CommentSection({ postId }) {
   // Submit comment mutation
   const submitComment = useMutation({
     mutationFn: async (text) => {
+      setErrorMsg("");
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL || 'http://localhost:8000'}/api/social/comments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -59,6 +61,7 @@ export function CommentSection({ postId }) {
       return { previousComments };
     },
     onError: (err, newText, context) => {
+      setErrorMsg("Failed to post comment. Please try again.");
       if (context?.previousComments) {
         queryClient.setQueryData(['comments', postId], context.previousComments);
       }
@@ -91,7 +94,9 @@ export function CommentSection({ postId }) {
       <div className="bg-surface-raised border border-border-subtle rounded-xl p-6">
         <h3 className="text-lg font-bold text-text-primary mb-4 font-display">Add a comment</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <label htmlFor="commentText" className="sr-only">Your comment</label>
           <textarea
+            id="commentText"
             className="w-full bg-bg-base border border-border-subtle rounded-lg p-3 text-text-primary focus:outline-none focus:ring-accent-accepted focus:border-accent-accepted min-h-[100px] resize-y"
             placeholder="What are your thoughts?"
             value={commentText}
@@ -110,6 +115,11 @@ export function CommentSection({ postId }) {
                   ref={el => el && el.focus()}
                 >
                   To do like and comment, please login first.
+                </div>
+              )}
+              {errorMsg && (
+                <div className="p-2 bg-surface-raised border border-accent-wrong rounded-lg text-sm font-mono text-accent-wrong inline-block" role="alert">
+                  {errorMsg}
                 </div>
               )}
             </div>

@@ -74,9 +74,10 @@ export default function LoginPage() {
           <div className="bg-surface-raised py-8 px-4 border border-border-subtle rounded-xl sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm font-medium text-text-primary">Email address</label>
+                <label htmlFor="email" className="block text-sm font-medium text-text-primary">Email address</label>
                 <div className="mt-1">
                   <input
+                    id="email"
                     name="email"
                     type="email"
                     required
@@ -88,9 +89,10 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-text-primary">Password</label>
+                <label htmlFor="password" className="block text-sm font-medium text-text-primary">Password</label>
                 <div className="mt-1">
                   <input
+                    id="password"
                     name="password"
                     type="password"
                     required

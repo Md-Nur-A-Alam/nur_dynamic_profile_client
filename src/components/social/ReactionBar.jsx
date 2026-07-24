@@ -19,6 +19,7 @@ export function ReactionBar({ postId }) {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
   const [showGate, setShowGate] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   // Fetch reactions
   const { data: reactions = [] } = useQuery({
@@ -34,6 +35,7 @@ export function ReactionBar({ postId }) {
   // Toggle reaction mutation
   const toggleReaction = useMutation({
     mutationFn: async (type) => {
+      setErrorMsg("");
       // If same type, it's a delete (unlike). Otherwise, it's a create/update.
       const existing = reactions.find(r => r.userId === session?.user?.id);
       
@@ -78,6 +80,7 @@ export function ReactionBar({ postId }) {
       return { previousReactions };
     },
     onError: (err, newType, context) => {
+      setErrorMsg("Failed to set reaction.");
       // Revert if error
       if (context?.previousReactions) {
         queryClient.setQueryData(['reactions', postId], context.previousReactions);
@@ -135,6 +138,12 @@ export function ReactionBar({ postId }) {
           ref={el => el && el.focus()}
         >
           To do like and comment, please login first.
+        </div>
+      )}
+      
+      {errorMsg && (
+        <div className="mt-4 p-3 bg-surface-raised border border-accent-wrong rounded-lg text-sm font-mono text-accent-wrong animate-in fade-in slide-in-from-top-2" role="alert">
+          {errorMsg}
         </div>
       )}
     </div>
