@@ -1,37 +1,67 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #F7F8FA;
-  --color-bg-surface: #FFFFFF;
-  --color-bg-surface-raised: #EEF1F6;
-  --color-border-subtle: #DFE3EA;
-  --color-text-primary: #12151C;
-  --color-text-muted: #5B6478;
-  --color-accent-accepted: #1BA36C;
-  --color-accent-accepted-dim: #158356;
-  --color-accent-pending: #D98A1F;
-  --color-accent-wrong: #E0524F;
-  --color-accent-info: #3E5FE0;
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
+  
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-surface-raised: var(--bg-surface-raised);
+  
+  --color-border-subtle: var(--border-subtle);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  
+  --color-accent-accepted: var(--accent-accepted);
+  --color-accent-accepted-dim: var(--accent-accepted-dim);
+  --color-accent-pending: var(--accent-pending);
+  --color-accent-wrong: var(--accent-wrong);
+  --color-accent-info: var(--accent-info);
+  
+  --font-display: var(--font-display), sans-serif;
+  --font-body: var(--font-body), sans-serif;
+  --font-mono: var(--font-mono), monospace;
 }
 
-/* Dark mode theme variables for Tailwind v4 */
 @layer base {
-  .dark {
-    --color-bg-base: #0B0E14;
-    --color-bg-surface: #141824;
-    --color-bg-surface-raised: #1B2130;
-    --color-border-subtle: #252C3D;
-    --color-text-primary: #E9EBF2;
-    --color-text-muted: #8D95A8;
-    --color-accent-accepted: #2FD98A;
-    --color-accent-accepted-dim: #1B9C63;
-    --color-accent-pending: #FFB454;
-    --color-accent-wrong: #FF6B6B;
-    --color-accent-info: #6C8CFF;
+  :root {
+    --bg-base: #F7F8FA;
+    --bg-surface: #FFFFFF;
+    --bg-surface-raised: #EEF1F6;
+    --border-subtle: #DFE3EA;
+    --text-primary: #12151C;
+    --text-muted: #5B6478;
+    
+    --accent-accepted: #1BA36C;
+    --accent-accepted-dim: #13774f;
+    --accent-pending: #D98A1F;
+    --accent-wrong: #E0524F;
+    --accent-info: #3E5FE0;
   }
-}
 
-body {
-  background-color: var(--color-bg-base);
-  color: var(--color-text-primary);
+  /* Default is dark mode per specs */
+  .dark {
+    --bg-base: #0B0E14;
+    --bg-surface: #141824;
+    --bg-surface-raised: #1B2130;
+    --border-subtle: #252C3D;
+    --text-primary: #E9EBF2;
+    --text-muted: #8D95A8;
+    
+    --accent-accepted: #2FD98A;
+    --accent-accepted-dim: #1B9C63;
+    --accent-pending: #FFB454;
+    --accent-wrong: #FF6B6B;
+    --accent-info: #6C8CFF;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+  }
+
+  a, button, [role="button"], input, select, textarea {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-accepted focus-visible:ring-offset-2 focus-visible:ring-offset-bg-base;
+  }
 }
