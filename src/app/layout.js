@@ -1,7 +1,8 @@
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { Providers } from "@/components/layout/Providers";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -33,14 +34,17 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col pt-20">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <Navbar />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          <Providers>
+            <Navbar />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </Providers>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+
 

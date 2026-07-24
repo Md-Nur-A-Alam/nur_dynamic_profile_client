@@ -124,7 +124,15 @@ export default function Hero({ profile, documents }) {
                 title={!resumeDoc ? 'Resume coming soon' : ''}
               >
                 {resumeDoc ? (
-                  <a href={resumeDoc.url} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                  <a 
+                    href={resumeDoc.url} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="flex items-center gap-2"
+                    onClick={() => {
+                      import('@/lib/confetti').then(m => m.triggerConfetti(true));
+                    }}
+                  >
                     <Download size={18} />
                     Download Resume
                   </a>

@@ -3,7 +3,10 @@ import Link from 'next/link';
 import { VerdictPill } from '@/components/ui/VerdictPill';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
+// import { ArrowLeft, ExternalLink, Github } from 'lucide-react';
+import { FaCircleArrowLeft } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa6";
+import { FaExternalLinkAlt } from "react-icons/fa";
 import { Reveal } from '@/components/ui/Reveal';
 
 async function fetchProject(id) {
@@ -31,7 +34,7 @@ export default async function ProjectDetailPage({ params }) {
         <h1 className="text-2xl font-mono text-accent-wrong mb-4">404 - Project Not Found</h1>
         <Link href="/">
           <Button variant="outline">
-            <ArrowLeft className="mr-2" size={16} /> Return Home
+            <FaCircleArrowLeft className="mr-2" size={16} /> Return Home
           </Button>
         </Link>
       </div>
@@ -46,7 +49,7 @@ export default async function ProjectDetailPage({ params }) {
         <Reveal>
           <Link href="/">
             <Button variant="ghost" className="mb-8 font-mono text-sm pl-0 hover:bg-transparent">
-              <ArrowLeft className="mr-2" size={16} /> // back to root
+              <FaCircleArrowLeft className="mr-2" size={16} /> // back to root
             </Button>
           </Link>
           
@@ -129,7 +132,7 @@ export default async function ProjectDetailPage({ params }) {
                     <a href={project.liveLink} target="_blank" rel="noreferrer" className="w-full">
                       <Button variant="primary" className="w-full justify-between group">
                         Live Deployment
-                        <ExternalLink size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        <FaExternalLinkAlt size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       </Button>
                     </a>
                   )}
@@ -138,7 +141,7 @@ export default async function ProjectDetailPage({ params }) {
                     <a href={project.clientRepo} target="_blank" rel="noreferrer" className="w-full">
                       <Button variant="secondary" className="w-full justify-between">
                         Client Repo
-                        <Github size={16} />
+                        <FaGithub size={16} />
                       </Button>
                     </a>
                   )}
