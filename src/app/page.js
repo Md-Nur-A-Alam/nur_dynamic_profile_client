@@ -35,7 +35,9 @@ export default async function Home() {
     currentWork,
     headlineStats,
     competitiveAchievements,
-    publications
+    publications,
+    training,
+    honoursAndAwards
   ] = await Promise.all([
     fetchCollection('profile'),
     fetchCollection('personalDetails'),
@@ -48,7 +50,9 @@ export default async function Home() {
     fetchCollection('currentWork'),
     fetchCollection('headlineStats'),
     fetchCollection('competitiveAchievements'),
-    fetchCollection('publications')
+    fetchCollection('publications'),
+    fetchCollection('training'),
+    fetchCollection('honoursAndAwards')
   ]);
 
   console.log("currentWork is " + currentWork);
@@ -64,6 +68,8 @@ export default async function Home() {
         education={education}
         competitiveAchievements={competitiveAchievements}
         publications={publications}
+        training={training}
+        honoursAndAwards={honoursAndAwards}
       />
       <Skills skills={skills} />
       <Experience experience={experience} />

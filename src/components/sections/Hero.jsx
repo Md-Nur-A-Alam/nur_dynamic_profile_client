@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/Button';
 import { FileText, Download, Linkedin, Trophy, BookOpen } from 'lucide-react';
 import { Reveal } from '@/components/ui/Reveal';
 import Image from 'next/image';
-import { FaGithub, FaLinkedinIn } from 'react-icons/fa6';
+import InteractiveBackground from '@/components/ui/InteractiveBackground';
+import { SOCIAL_LINKS } from '@/lib/socialLinks';
 
 export default function Hero({ profile, documents }) {
   const [typeWriterText, setTypeWriterText] = useState('');
@@ -65,21 +66,26 @@ export default function Hero({ profile, documents }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      {/* Subtle Background Elements */}
-      <motion.div
-        className="absolute inset-0 z-0 opacity-10 pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(circle at 15% 50%, var(--accent-pending), transparent 50%), radial-gradient(circle at 85% 30%, var(--accent-pending), transparent 50%)' }}
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ opacity: 0.1, scale: 1 }}
-        transition={{ duration: 1.5 }}
-      ></motion.div>
-      <motion.div
-        className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
-        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.03 }}
-        transition={{ duration: 2 }}
-      ></motion.div>
+      {/* Light Mode Playful Background */}
+      <InteractiveBackground />
+      
+      {/* Dark Mode Subtle Background Elements */}
+      <div className="hidden dark:block absolute inset-0 pointer-events-none">
+        <motion.div
+          className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(circle at 15% 50%, var(--accent-pending), transparent 50%), radial-gradient(circle at 85% 30%, var(--accent-pending), transparent 50%)' }}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 0.1, scale: 1 }}
+          transition={{ duration: 1.5 }}
+        ></motion.div>
+        <motion.div
+          className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
+          style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.03 }}
+          transition={{ duration: 2 }}
+        ></motion.div>
+      </div>
 
       <div className="container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center z-10 relative">
 
@@ -156,27 +162,16 @@ export default function Hero({ profile, documents }) {
               </Button>
             </div>
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-6 text-text-muted">
-              {profile?.socialLinks?.map((link, i) => {
-                let Icon = FaGithub;
-                if (link.platform.toLowerCase() === 'linkedin') Icon = FaLinkedinIn;
-                if (link.platform.toLowerCase().includes('leet')) Icon = Trophy;
-                if (link.platform.toLowerCase().includes('scholar')) Icon = BookOpen;
+            {/* Social Icons - Mobile Only */}
+            <div className="flex lg:hidden flex-wrap items-center gap-4 md:gap-6 text-text-muted mt-8">
+              {SOCIAL_LINKS.map((link, i) => {
+                const Icon = link.icon;
                 return (
-                  <a key={i} href={link.url} target="_blank" rel="noreferrer" className="hover:text-accent-pending transition-colors">
-                    <Icon size={22} />
+                  <a key={i} href={link.url} target="_blank" rel="noreferrer" title={link.platform} className="hover:text-accent-pending hover:-translate-y-1 transition-all duration-300">
+                    <Icon size={24} />
                   </a>
                 );
               })}
-              {!profile?.socialLinks?.length && (
-                <>
-                  <a href="#" className="hover:text-accent-pending transition-colors"><FaGithub size={22} /></a>
-                  <a href="#" className="hover:text-accent-pending transition-colors"><FaLinkedinIn size={22} /></a>
-                  <a href="#" className="hover:text-accent-pending transition-colors"><Trophy size={22} /></a>
-                  <a href="#" className="hover:text-accent-pending transition-colors"><BookOpen size={22} /></a>
-                </>
-              )}
             </div>
           </motion.div>
         </div>
@@ -273,6 +268,58 @@ export default function Hero({ profile, documents }) {
 
           </motion.div>
         </div>
+
+        {/* Center Vertical Social Icons (Desktop) */}
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 top-[55%] -translate-y-1/2 flex-col items-center z-20">
+          
+          <motion.div 
+            className="w-[1px] h-12 bg-gradient-to-b from-transparent to-accent-pending mb-1"
+            initial={{ height: 0 }}
+            animate={{ height: 48 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          />
+
+          {/* Interactive Shape Container (Custom Hook) */}
+          <motion.div
+            className="relative py-10 px-3.5 flex flex-col items-center gap-6 bg-bg-surface/30 backdrop-blur-md border border-accent-pending/20 hover:border-accent-pending/60 hover:bg-bg-surface/60 transition-all duration-500 group cursor-default shadow-[0_0_15px_rgba(0,0,0,0.2)] dark:shadow-[0_0_15px_rgba(255,180,84,0.05)] hover:shadow-[0_0_30px_rgba(255,180,84,0.15)]"
+            style={{ 
+              clipPath: 'polygon(50% 0%, 100% 4%, 100% 96%, 50% 100%, 0% 96%, 0% 4%)' 
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.8, type: "spring", stiffness: 100 }}
+          >
+            {/* Ambient Inner Glow */}
+            <div className="absolute inset-0 bg-accent-pending/0 group-hover:bg-accent-pending/10 transition-colors duration-500 blur-md" />
+            
+            {SOCIAL_LINKS.map((link, i) => {
+              const Icon = link.icon;
+              return (
+                <motion.a 
+                  key={i} 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  title={link.platform} 
+                  className="relative z-10 text-text-muted hover:text-accent-pending hover:scale-125 transition-all duration-300"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 1.0 + (i * 0.15), type: "spring", stiffness: 200 }} 
+                >
+                  <Icon size={20} />
+                </motion.a>
+              );
+            })}
+          </motion.div>
+
+          <motion.div 
+            className="w-[1px] h-20 bg-gradient-to-b from-accent-pending to-transparent mt-1"
+            initial={{ height: 0 }}
+            animate={{ height: 80 }}
+            transition={{ duration: 0.8, delay: 1.0 + (SOCIAL_LINKS.length * 0.15) }}
+          />
+        </div>
+
       </div>
 
       {/* Scroll indicator */}

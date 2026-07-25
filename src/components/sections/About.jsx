@@ -1,9 +1,19 @@
 import React from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 
-export default function About({ details, currentWork, stats, experience, education, competitiveAchievements, publications }) {
+export default function About({ details, currentWork, stats, experience, education, competitiveAchievements, publications, training, honoursAndAwards }) {
   // Use first personal details entry
   const data = details?.[0] || {};
+
+  const trainingItems = Array.isArray(training) && training.length > 0 ? training.slice(0, 4) : [
+    { domain: "Web Development", provider: "Programming Hero" },
+    { domain: "Competitive Programming", provider: "CPS Academy" }
+  ];
+
+  const awardItems = Array.isArray(honoursAndAwards) && honoursAndAwards.length > 0 ? honoursAndAwards.slice(0, 4) : [
+    { title: "Chancellor Award / University Gold Medal", notes: "Final CGPA 3.96/4.00" },
+    { title: "Champion, BAUST Intra-University Programming Contest", notes: null }
+  ];
 
   const currentWorkData = currentWork?.[0] || {
     title: "Privacce Labs",
@@ -14,7 +24,14 @@ export default function About({ details, currentWork, stats, experience, educati
   };
 
   const generateTimeline = () => {
-    const events = [];
+    // Initialize with foundational historical events
+    const events = [
+      { date: new Date(2016, 0), yearStr: "2016", desc: "Started teaching math & competitive programming" },
+      { date: new Date(2017, 0), yearStr: "2017", desc: "SSC · GPA 4.82 | Satkhira Govt. High School" },
+      { date: new Date(2019, 0), yearStr: "2019", desc: "HSC · GPA 4.25 | Started freelancing (Fiverr)" },
+      { date: new Date(2021, 0), yearStr: "2021", desc: "Joined BAUST CSE - Bangladesh Army University" },
+      { date: new Date(2023, 0), yearStr: "2023", desc: "1st Runner-up · National Math Olympiad, Rangpur Region" }
+    ];
 
     // 1. Education
     if (Array.isArray(education)) {
@@ -82,21 +99,24 @@ export default function About({ details, currentWork, stats, experience, educati
     // Sort ascending
     events.sort((a, b) => a.date - b.date);
 
-    // Filter duplicates or excessive entries to keep the timeline manageable (max 10 items)
-    const filteredEvents = events.slice(-10);
+    // Filter duplicates by description to prevent overlaps (e.g. BAUST from DB and Static)
+    const uniqueEvents = [];
+    const seenDesc = new Set();
+
+    events.forEach(e => {
+      // Normalize description for matching
+      const descKey = e.desc.toLowerCase().substring(0, 20);
+      if (!seenDesc.has(descKey)) {
+        seenDesc.add(descKey);
+        uniqueEvents.push(e);
+      }
+    });
+
+    // Keep up to 15 items so the static and dynamic both fit beautifully
+    const filteredEvents = uniqueEvents.slice(-15);
 
     if (filteredEvents.length === 0) {
-      return [
-        { year: "2014", desc: "Started teaching math & competitive programming" },
-        { year: "2017", desc: "SSC · GPA 4.82 | Satkhira Govt. High School" },
-        { year: "2019", desc: "HSC · GPA 4.25 | Started freelancing (Fiverr)" },
-        { year: "2021", desc: "Joined BAUST CSE - Bangladesh Army University" }, 
-        { year: "2023", desc: "1st Runner-up · National Math Olympiad, Rangpur Region" },
-        { year: "2025 Jan", desc: "ICPC Regional Top 2.4% (Preliminary) | Top 43% (Regional)" },
-        { year: "2025 Feb", desc: "Graduated · CGPA 3.96/4.00" },
-        { year: "2025 Apr", desc: "IEEE Publication: CornNetLite" },
-        { year: "2025 Present", desc: "AI Software Engineer Intern · Privacce Labs 🚀" }
-      ];
+      return [];
     }
 
     return filteredEvents.map(e => ({ year: e.yearStr, desc: e.desc }));
@@ -122,7 +142,7 @@ export default function About({ details, currentWork, stats, experience, educati
     "Bangla NLP", "Lightweight CNN", "Edge AI", "Frontend Architecture"
   ];
 
-  const defaultBio = "I am a Computer Science graduate from BAUST — Bangladesh Army University of Science and Technology — with a near-perfect CGPA of 3.96. My journey started not in a classroom but at a chalkboard at age 12, teaching mathematics. Since then I have competed internationally in programming, published in IEEE, built full-stack systems, and am now building AI-powered mobile applications at Privacce Labs.";
+  const defaultBio = `I am a Computer Science graduate from BAUST — Bangladesh Army University of Science and Technology — with a near-perfect CGPA of 3.96. My journey started not in a classroom but at a chalkboard at age 16, teaching mathematics. Since then I have competed internationally in programming, published in IEEE, built full-stack systems, and am now building my project ${currentWorkData.title} as ${currentWorkData.role}.`;
 
   return (
     <section id="about" className="py-16 md:py-28 bg-bg-base">
@@ -212,6 +232,48 @@ export default function About({ details, currentWork, stats, experience, educati
                       {interest}
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Training & Certifications Summary */}
+              <div className="mt-12">
+                <h3 className="text-[10px] md:text-xs font-mono text-accent-pending tracking-[0.2em] uppercase mb-5 font-bold">Certifications & Training</h3>
+                <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+
+                  {/* Training Block */}
+                  <div className="bg-bg-surface border border-border-subtle rounded-xl p-5 hover:border-accent-pending/30 transition-colors shadow-lg relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-accent-info opacity-[0.02] rounded-full blur-2xl group-hover:opacity-[0.05] transition-opacity"></div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="w-2 h-2 rounded-full bg-accent-info shadow-[0_0_8px_var(--accent-info)]"></span>
+                      <h4 className="text-sm font-display text-text-primary font-semibold">Specialized Training</h4>
+                    </div>
+                    <div className="space-y-4">
+                      {trainingItems.map((item, idx) => (
+                        <div key={idx} className="relative pl-4 border-l border-border-subtle hover:border-accent-info transition-colors">
+                          <div className="text-xs font-mono text-text-primary mb-1">{item.domain}</div>
+                          <div className="text-[10px] font-mono text-text-muted">{item.provider}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Certifications / Awards Block */}
+                  <div className="bg-bg-surface border border-border-subtle rounded-xl p-5 hover:border-accent-pending/30 transition-colors shadow-lg relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-accent-accepted opacity-[0.02] rounded-full blur-2xl group-hover:opacity-[0.05] transition-opacity"></div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="w-2 h-2 rounded-full bg-accent-accepted shadow-[0_0_8px_var(--accent-accepted)]"></span>
+                      <h4 className="text-sm font-display text-text-primary font-semibold">Awards & Certs</h4>
+                    </div>
+                    <div className="space-y-4">
+                      {awardItems.map((item, idx) => (
+                        <div key={idx} className="relative pl-4 border-l border-border-subtle hover:border-accent-accepted transition-colors">
+                          <div className="text-xs font-mono text-text-primary mb-1 line-clamp-2 leading-relaxed">{item.title}</div>
+                          {item.notes && <div className="text-[10px] font-mono text-text-muted line-clamp-1">{item.notes}</div>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
