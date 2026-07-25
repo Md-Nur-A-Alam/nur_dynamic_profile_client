@@ -97,13 +97,14 @@ export default function Hero({ profile, documents }) {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
+
             {/* Pill Container */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
               {/* Pill */}
               <div className="inline-flex items-center gap-3 border border-border-subtle rounded-full px-5 py-2 bg-bg-surface/50 backdrop-blur-sm">
                 <span className="w-2.5 h-2.5 rounded-full bg-accent-accepted shadow-[0_0_8px_rgba(47,217,138,0.6)]"></span>
                 <span className="text-sm font-mono font-medium text-text-primary tracking-wide">
-                  Open to Work · Available Now
+                  {profile?.availability || 'Open to Work from now'}
                 </span>
               </div>
             </div>

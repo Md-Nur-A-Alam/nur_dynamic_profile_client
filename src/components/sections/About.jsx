@@ -125,17 +125,46 @@ export default function About({ details, currentWork, stats, experience, educati
   const timelineItems = generateTimeline();
 
   const dbStats = stats?.[0];
-  const statsItems = dbStats ? [
-    { value: `${dbStats.problemsSolved.toLocaleString()}+`, label: "Problems Solved" },
-    { value: `${dbStats.cgpa}`, label: "CGPA" },
-    { value: `${dbStats.ieeePapers}`, label: "IEEE Papers" },
-    { value: `${dbStats.contests}+`, label: "Contests" },
-  ] : [
-    { value: "1,500+", label: "Problems Solved" },
-    { value: "3.96", label: "CGPA" },
-    { value: "2", label: "IEEE Papers" },
-    { value: "70+", label: "Contests" },
-  ];
+  
+  // Dynamically generate stats so admin can add/remove fields freely
+  const generateStatsItems = (statsObj) => {
+    if (!statsObj) {
+      // Fallback
+      return [
+        { value: "1500+", label: "Problems Solved" },
+        { value: "3.96", label: "CGPA" },
+        { value: "4", label: "IEEE Papers" },
+        { value: "70+", label: "Contests" },
+        { value: "1483", label: "CF Rating" },
+        { value: "1%", label: "Beecrowd Rank" },
+      ];
+    }
+
+    const items = [];
+    const ignoredKeys = ['_id', 'visibility', 'createdAt', 'updatedAt', '__v'];
+
+    // Helper to beautifully format camelCase keys if admin forgets to use spaces
+    const formatLabel = (key) => {
+      if (key.includes(' ') || key === key.toUpperCase()) return key; // already formatted or acronym
+      const result = key.replace(/([A-Z])/g, " $1").trim();
+      return result.charAt(0).toUpperCase() + result.slice(1);
+    };
+
+    for (const [key, value] of Object.entries(statsObj)) {
+      if (!ignoredKeys.includes(key)) {
+        // Automatically append '+' if needed based on typical logic, or just trust the DB string
+        items.push({
+          label: formatLabel(key),
+          value: String(value)
+        });
+      }
+    }
+    
+    // Sort them so they look consistent, or leave as DB order. 
+    return items;
+  };
+
+  const statsItems = generateStatsItems(dbStats);
 
   const researchInterests = [
     "AI", "Machine Learning", "Deep Learning", "Image Processing",
@@ -148,6 +177,9 @@ export default function About({ details, currentWork, stats, experience, educati
     <section id="about" className="py-16 md:py-28 bg-bg-base">
       <div className="container mx-auto px-4 max-w-6xl">
         <Reveal>
+          <div className="mb-8 text-text-muted font-mono text-sm tracking-tight">
+            // 02 — about
+          </div>
           {/* Section Header */}
           <div className="flex flex-col items-start mb-12">
             <div className="flex items-start gap-2 relative">
@@ -163,10 +195,10 @@ export default function About({ details, currentWork, stats, experience, educati
           </div>
 
           {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-20">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 mb-20">
             {statsItems.map((stat, idx) => (
-              <div key={idx} className="bg-bg-surface rounded-xl p-6 md:p-8 border border-border-subtle shadow-lg hover:border-accent-pending/30 transition-colors">
-                <div className="text-3xl md:text-4xl font-display text-accent-pending mb-3">{stat.value}</div>
+              <div key={idx} className="bg-bg-surface rounded-xl p-4 md:p-6 border border-border-subtle shadow-lg hover:border-accent-pending/30 transition-colors">
+                <div className="text-2xl md:text-3xl font-display text-accent-pending mb-3">{stat.value}</div>
                 <div className="text-[10px] md:text-xs font-mono tracking-widest text-text-muted uppercase">{stat.label}</div>
               </div>
             ))}

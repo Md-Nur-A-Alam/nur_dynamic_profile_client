@@ -263,7 +263,27 @@ export const collectionSchemas = {
       "type": "string"
     },
     {
+      "name": "position",
+      "type": "string"
+    },
+    {
       "name": "organization",
+      "type": "string"
+    },
+    {
+      "name": "industry",
+      "type": "string"
+    },
+    {
+      "name": "location",
+      "type": "string"
+    },
+    {
+      "name": "website",
+      "type": "string"
+    },
+    {
+      "name": "image",
       "type": "string"
     },
     {
@@ -279,11 +299,11 @@ export const collectionSchemas = {
       "type": "boolean"
     },
     {
-      "name": "notes",
-      "type": "string"
+      "name": "responsibilities",
+      "type": "array-of-strings"
     },
     {
-      "name": "image",
+      "name": "notes",
       "type": "string"
     },
     {
