@@ -407,12 +407,40 @@ export const collectionSchemas = {
       ]
     },
     {
+      "name": "role",
+      "type": "string"
+    },
+    {
+      "name": "duration",
+      "type": "string"
+    },
+    {
       "name": "techStack",
       "type": "array-of-strings"
     },
     {
       "name": "summary",
       "type": "string"
+    },
+    {
+      "name": "detailedDescription",
+      "type": "string"
+    },
+    {
+      "name": "architecture",
+      "type": "string"
+    },
+    {
+      "name": "features",
+      "type": "array-of-strings"
+    },
+    {
+      "name": "challenges",
+      "type": "array-of-strings"
+    },
+    {
+      "name": "learnings",
+      "type": "array-of-strings"
     },
     {
       "name": "live_link",
@@ -423,8 +451,16 @@ export const collectionSchemas = {
       "type": "string"
     },
     {
+      "name": "demoVideo",
+      "type": "string"
+    },
+    {
       "name": "image",
       "type": "string"
+    },
+    {
+      "name": "gallery",
+      "type": "array-of-strings"
     },
     {
       "name": "visibility",

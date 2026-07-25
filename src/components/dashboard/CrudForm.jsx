@@ -205,6 +205,16 @@ export function CrudForm({ collectionName, initialData, onSave, onCancel }) {
                       }
                     }
                   }}
+                  onBlur={(e) => {
+                    const val = e.target.value.trim();
+                    if (val) {
+                      const current = formData[field.name] || [];
+                      if (!current.includes(val)) {
+                        setFormData(prev => ({ ...prev, [field.name]: [...current, val] }));
+                      }
+                      e.target.value = '';
+                    }
+                  }}
                 />
               </div>
             );
