@@ -3,6 +3,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Providers } from "@/components/layout/Providers";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -40,6 +42,7 @@ export default function RootLayout({ children }) {
               {children}
             </main>
             <Footer />
+            <ToastContainer theme="dark" position="bottom-right" />
           </Providers>
         </ThemeProvider>
       </body>

@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { DataTable } from "@/components/dashboard/DataTable";
 import { CrudForm } from "@/components/dashboard/CrudForm";
 import { Button } from "@/components/ui/Button";
+import { toast } from "react-toastify";
 
 export default function PortfolioCollectionPage() {
   const { collection } = useParams();
@@ -12,7 +13,6 @@ export default function PortfolioCollectionPage() {
   const [loading, setLoading] = useState(true);
   const [editingItem, setEditingItem] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -20,7 +20,6 @@ export default function PortfolioCollectionPage() {
 
   const fetchData = async () => {
     setLoading(true);
-    setError(null);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}`, {
         credentials: 'include'
@@ -29,11 +28,11 @@ export default function PortfolioCollectionPage() {
         const json = await res.json();
         setData(json);
       } else {
-        setError("Failed to fetch data.");
+        toast.error("Failed to fetch data.");
       }
     } catch (err) {
       console.error(err);
-      setError("Network error. Could not fetch data.");
+      toast.error("Network error. Could not fetch data.");
     }
     setLoading(false);
   };
@@ -42,7 +41,6 @@ export default function PortfolioCollectionPage() {
     const isEditing = !!formData._id;
     const url = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}${isEditing ? `/${formData._id}` : ''}`;
     const method = isEditing ? 'PUT' : 'POST';
-    setError(null);
 
     try {
       const res = await fetch(url, {
@@ -55,18 +53,18 @@ export default function PortfolioCollectionPage() {
         setIsFormOpen(false);
         setEditingItem(null);
         fetchData();
+        toast.success("Item saved successfully!");
       } else {
         const errorData = await res.json().catch(() => ({}));
-        setError(errorData.message || "Failed to save.");
+        toast.error(errorData.message || "Failed to save.");
       }
     } catch (err) {
       console.error(err);
-      setError("Network error. Could not save data.");
+      toast.error("Network error. Could not save data.");
     }
   };
 
   const handleDelete = async (id) => {
-    setError(null);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/portfolio/${collection}/${id}`, {
         method: 'DELETE',
@@ -74,12 +72,13 @@ export default function PortfolioCollectionPage() {
       });
       if (res.ok) {
         fetchData();
+        toast.success("Item deleted successfully!");
       } else {
-        setError("Failed to delete item.");
+        toast.error("Failed to delete item.");
       }
     } catch (err) {
       console.error(err);
-      setError("Network error. Could not delete data.");
+      toast.error("Network error. Could not delete data.");
     }
   };
 
@@ -91,16 +90,9 @@ export default function PortfolioCollectionPage() {
           <Button onClick={() => {
             setEditingItem(null);
             setIsFormOpen(true);
-            setError(null);
           }}>Create New</Button>
         )}
       </div>
-
-      {error && (
-        <div className="mb-6 p-4 bg-surface-raised border border-accent-wrong rounded-md text-accent-wrong text-sm font-mono" role="alert">
-          {error}
-        </div>
-      )}
 
       {isFormOpen ? (
         <div className="bg-surface p-6 rounded-md border border-border-subtle">

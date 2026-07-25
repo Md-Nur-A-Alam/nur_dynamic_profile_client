@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { DataTable } from "@/components/dashboard/DataTable";
 import { CrudForm } from "@/components/dashboard/CrudForm";
 import { Button } from "@/components/ui/Button";
+import { toast } from "react-toastify";
 
 // define schema explicitly for Posts, as they aren't part of portfolio models
 const postSchema = [
@@ -35,9 +36,12 @@ export default function PostsDashboard() {
         const json = await res.json();
         // The endpoint returns { data: [...posts] }
         setData(json.data || []);
+      } else {
+        toast.error("Failed to fetch data.");
       }
     } catch (err) {
       console.error(err);
+      toast.error("Network error. Could not fetch data.");
     }
     setLoading(false);
   };
@@ -58,11 +62,14 @@ export default function PostsDashboard() {
         setIsFormOpen(false);
         setEditingItem(null);
         fetchData();
+        toast.success("Post saved successfully!");
       } else {
-        alert("Failed to save.");
+        const errorData = await res.json().catch(() => ({}));
+        toast.error(errorData.message || "Failed to save.");
       }
     } catch (err) {
       console.error(err);
+      toast.error("Network error. Could not save post.");
     }
   };
 
@@ -74,9 +81,13 @@ export default function PostsDashboard() {
       });
       if (res.ok) {
         fetchData();
+        toast.success("Post deleted successfully!");
+      } else {
+        toast.error("Failed to delete post.");
       }
     } catch (err) {
       console.error(err);
+      toast.error("Network error. Could not delete post.");
     }
   };
 

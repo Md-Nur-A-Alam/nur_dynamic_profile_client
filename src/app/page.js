@@ -10,8 +10,8 @@ import Contact from '@/components/sections/Contact';
 async function fetchCollection(collectionName) {
   try {
     const baseUrl = process.env.SERVER_BASE_URL;
-    const res = await fetch(`${baseUrl}/api/portfolio/${collectionName}`, { 
-      next: { revalidate: 60 } 
+    const res = await fetch(`${baseUrl}/api/portfolio/${collectionName}`, {
+      next: { revalidate: 60 }
     });
     if (!res.ok) return null;
     return await res.json();
@@ -24,14 +24,18 @@ async function fetchCollection(collectionName) {
 export default async function Home() {
   // Parallel fetch for speed
   const [
-    profile, 
-    personalDetails, 
-    skills, 
-    experience, 
-    education, 
-    projects, 
+    profile,
+    personalDetails,
+    skills,
+    experience,
+    education,
+    projects,
     contact,
-    documents
+    documents,
+    currentWork,
+    headlineStats,
+    competitiveAchievements,
+    publications
   ] = await Promise.all([
     fetchCollection('profile'),
     fetchCollection('personalDetails'),
@@ -40,13 +44,27 @@ export default async function Home() {
     fetchCollection('education'),
     fetchCollection('projects'),
     fetchCollection('contact'),
-    fetchCollection('documents')
+    fetchCollection('documents'),
+    fetchCollection('currentWork'),
+    fetchCollection('headlineStats'),
+    fetchCollection('competitiveAchievements'),
+    fetchCollection('publications')
   ]);
+
+  console.log("currentWork is " + currentWork);
 
   return (
     <div className="flex flex-col w-full">
       <Hero profile={profile?.[0]} documents={documents} />
-      <About details={personalDetails} />
+      <About
+        details={personalDetails}
+        currentWork={currentWork}
+        stats={headlineStats}
+        experience={experience}
+        education={education}
+        competitiveAchievements={competitiveAchievements}
+        publications={publications}
+      />
       <Skills skills={skills} />
       <Experience experience={experience} />
       <Education education={education} />
