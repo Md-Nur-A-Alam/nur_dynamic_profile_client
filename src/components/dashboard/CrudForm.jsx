@@ -162,21 +162,36 @@ export function CrudForm({ collectionName, initialData, onSave, onCancel }) {
             return (
               <div key={idx} className="col-span-1 md:col-span-2">
                 <label className="block text-sm font-medium text-text-primary capitalize mb-2">{field.name}</label>
+                
+                {(field.name === 'image' || field.name === 'url' || field.name === 'attachmentImages' || field.name.toLowerCase().includes('image')) && (
+                  <div className="mb-4">
+                    <Uploader 
+                      fileType={collectionName === 'documents' && field.name === 'url' ? 'pdf' : 'image'} 
+                      onUploadSuccess={(url) => {
+                        const current = formData[field.name] || [];
+                        if (!current.includes(url)) {
+                          setFormData(prev => ({ ...prev, [field.name]: [...current, url] }));
+                        }
+                      }} 
+                    />
+                  </div>
+                )}
+
                 <div className="flex flex-wrap gap-2 mb-2">
                   {(formData[field.name] || []).map((item, i) => (
-                    <span key={i} className="px-2 py-1 bg-surface-raised border border-border-subtle rounded text-xs flex items-center gap-1 text-text-primary">
+                    <span key={i} className="px-2 py-1 bg-surface-raised border border-border-subtle rounded text-xs flex items-center gap-1 text-text-primary break-all max-w-full">
                       {item}
                       <button type="button" onClick={() => {
                         const newArr = (formData[field.name] || []).filter((_, idx) => idx !== i);
                         setFormData(prev => ({ ...prev, [field.name]: newArr }));
-                      }} className="text-text-muted hover:text-text-error ml-1">&times;</button>
+                      }} className="text-text-muted hover:text-text-error ml-1 shrink-0">&times;</button>
                     </span>
                   ))}
                 </div>
                 <input
                   type="text"
                   className="w-full px-3 py-2 bg-bg-base border border-border-subtle rounded-md text-text-primary focus:outline-none focus:border-accent-accepted text-sm"
-                  placeholder="Type and press Enter or comma..."
+                  placeholder="Paste link and press Enter or comma..."
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ',') {
                       e.preventDefault();

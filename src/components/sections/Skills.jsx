@@ -78,7 +78,7 @@ export default function Skills({ skills }) {
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <Reveal>
             <div className="mb-8 text-text-muted font-mono text-sm tracking-tight">
-            // 03 — Skills
+            // 05 — Skills
             </div>
             {/* Section Header */}
             <div className="flex flex-col mb-12">

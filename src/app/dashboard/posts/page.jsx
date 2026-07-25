@@ -34,8 +34,7 @@ export default function PostsDashboard() {
       });
       if (res.ok) {
         const json = await res.json();
-        // The endpoint returns { data: [...posts] }
-        setData(json.data || []);
+        setData(json.data || (Array.isArray(json) ? json : []));
       } else {
         toast.error("Failed to fetch data.");
       }

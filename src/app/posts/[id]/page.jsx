@@ -55,7 +55,7 @@ export default async function PostDetailPage({ params }) {
               </h1>
               
               <div className="flex flex-wrap items-center gap-4 text-sm text-text-muted font-mono">
-                <time>{format(new Date(post.createdAt || Date.now()), 'MMMM dd, yyyy')}</time>
+                <time>{format(new Date(post.createdAt || Date.now()), "EEEE, MMM dd, yyyy 'at' hh:mm:ss a")}</time>
                 {post.location && <span>📍 {post.location}</span>}
                 {post.feeling && <span>Feeling {post.feeling}</span>}
               </div>

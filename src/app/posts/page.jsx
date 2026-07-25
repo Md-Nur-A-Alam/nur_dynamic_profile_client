@@ -50,7 +50,7 @@ export default async function PostsPage() {
                           </Link>
                         </CardTitle>
                         <div className="text-sm text-text-muted font-mono shrink-0 ml-4">
-                          {format(new Date(post.createdAt || Date.now()), 'MMM dd, yyyy')}
+                          {format(new Date(post.createdAt || Date.now()), "EEEE, MMM dd, yyyy 'at' hh:mm:ss a")}
                         </div>
                       </div>
                       {post.location && (

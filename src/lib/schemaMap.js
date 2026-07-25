@@ -209,11 +209,23 @@ export const collectionSchemas = {
       "type": "string"
     },
     {
+      "name": "degree",
+      "type": "string"
+    },
+    {
+      "name": "major",
+      "type": "string"
+    },
+    {
       "name": "institution",
       "type": "string"
     },
     {
       "name": "board",
+      "type": "string"
+    },
+    {
+      "name": "location",
       "type": "string"
     },
     {
@@ -223,6 +235,14 @@ export const collectionSchemas = {
     {
       "name": "result",
       "type": "string"
+    },
+    {
+      "name": "honours",
+      "type": "string"
+    },
+    {
+      "name": "achievements",
+      "type": "array-of-strings"
     },
     {
       "name": "registrationNumber",
@@ -557,12 +577,36 @@ export const collectionSchemas = {
       "type": "string"
     },
     {
+      "name": "category",
+      "type": "string"
+    },
+    {
+      "name": "institution",
+      "type": "string"
+    },
+    {
+      "name": "location",
+      "type": "string"
+    },
+    {
       "name": "startDate",
       "type": "string"
     },
     {
       "name": "endDate",
       "type": "string"
+    },
+    {
+      "name": "current",
+      "type": "boolean"
+    },
+    {
+      "name": "responsibilities",
+      "type": "array-of-strings"
+    },
+    {
+      "name": "achievements",
+      "type": "array-of-strings"
     },
     {
       "name": "notes",
@@ -859,7 +903,21 @@ export const collectionSchemas = {
     },
     {
       "name": "feeling",
-      "type": "string"
+      "type": "enum",
+      "options": [
+        "😊 Happy",
+        "😔 Sad",
+        "🤔 Thoughtful",
+        "🚀 Excited",
+        "💻 Coding",
+        "📚 Learning",
+        "😴 Tired",
+        "😎 Cool",
+        "🌟 Inspired",
+        "🎉 Celebrating",
+        "💪 Motivated",
+        "☕ Caffeinated"
+      ]
     },
     {
       "name": "attachmentImages",

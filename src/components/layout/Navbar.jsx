@@ -12,6 +12,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const dropdownRef = React.useRef(null);
   const { data: session } = useSession();
   
   const { scrollYProgress } = useScroll();
@@ -20,6 +21,16 @@ export default function Navbar() {
     damping: 30,
     restDelta: 0.001
   });
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setProfileMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,26 +90,28 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-2 lg:gap-3 xl:gap-5 overflow-x-auto no-scrollbar max-w-[70vw]">
-          {links.map((l) => (
-            <Link
-              key={l.name}
-              href={l.href}
-              className={cn(
-                "text-[11px] lg:text-xs xl:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-accepted rounded-sm whitespace-nowrap",
-                activeSection === l.id ? "text-accent-accepted font-semibold" : "text-text-muted hover:text-text-primary"
-              )}
-            >
-              {l.name}
-            </Link>
-          ))}
-          <div className="ml-2 pl-3 lg:pl-4 border-l border-border-subtle flex items-center gap-2 lg:gap-4 shrink-0">
+        <div className="hidden md:flex items-center">
+          <nav className="flex items-center gap-2 lg:gap-3 xl:gap-5 overflow-x-auto no-scrollbar max-w-[60vw] pr-2">
+            {links.map((l) => (
+              <Link
+                key={l.name}
+                href={l.href}
+                className={cn(
+                  "text-[11px] lg:text-xs xl:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-accepted rounded-sm whitespace-nowrap",
+                  activeSection === l.id ? "text-accent-accepted font-semibold" : "text-text-muted hover:text-text-primary"
+                )}
+              >
+                {l.name}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="pl-3 lg:pl-4 border-l border-border-subtle flex items-center gap-2 lg:gap-4 shrink-0">
             <ThemeToggle />
             {session ? (
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button 
                   onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  onBlur={() => setTimeout(() => setProfileMenuOpen(false), 200)}
                   className="flex items-center gap-2 focus-visible:outline-none"
                 >
                   <img 
@@ -109,7 +122,7 @@ export default function Navbar() {
                 </button>
                 
                 {profileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-surface-raised border border-border-subtle rounded-md shadow-lg py-1 z-50">
+                  <div className="absolute right-0 mt-2 w-48 bg-bg-surface border border-border-subtle rounded-md shadow-lg py-1 z-50">
                     <div className="px-4 py-2 border-b border-border-subtle mb-1">
                       <p className="text-sm font-medium text-text-primary truncate">{session.user?.name}</p>
                       <p className="text-xs text-text-muted truncate">{session.user?.email}</p>
@@ -149,7 +162,7 @@ export default function Navbar() {
               </Link>
             )}
           </div>
-        </nav>
+        </div>
 
         {/* Mobile Nav Toggle */}
         <div className="flex items-center gap-4 md:hidden">
