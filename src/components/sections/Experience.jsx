@@ -14,6 +14,9 @@ export default function Experience({ experience }) {
     <section id="experience" className="py-16 md:py-28 bg-bg-base border-t border-border-subtle">
       <div className="container mx-auto px-4 max-w-6xl">
         <Reveal>
+          <div className="mb-8 text-text-muted font-mono text-sm tracking-tight">
+            // 03 — experience
+          </div>
           {/* Section Header */}
           <div className="flex flex-col mb-16 md:mb-24">
             <h2 className="text-4xl md:text-5xl font-display font-medium text-text-primary tracking-tight uppercase">

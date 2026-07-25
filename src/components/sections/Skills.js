@@ -24,7 +24,7 @@ export default function Skills({ skills }) {
       <div className="container mx-auto px-4 max-w-5xl">
         <Reveal>
           <div className="mb-8 text-text-muted font-mono text-sm tracking-tight">
-            // 03 — skills
+            // 05 — skills
           </div>
           
           <div className="grid lg:grid-cols-2 gap-16 items-start">

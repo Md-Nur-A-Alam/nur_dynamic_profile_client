@@ -11,23 +11,23 @@ export default function Contact({ contactInfo }) {
       <div className="container mx-auto px-4 max-w-4xl text-center">
         <Reveal>
           <div className="mb-8 text-text-muted font-mono text-sm tracking-tight flex justify-center">
-            // 07 — contact
+            // 13 — contact
           </div>
-          
+
           <h2 className="text-4xl md:text-5xl font-display font-bold text-text-primary mb-6">
             Let's build together.
           </h2>
           <p className="text-lg text-text-muted mb-12 max-w-2xl mx-auto font-body">
             Currently open to new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
           </p>
-          
+
           <div className="flex flex-wrap items-center justify-center gap-6">
             {data.email && (
               <a href={`mailto:${data.email}`}>
                 <Button variant="primary" size="lg">Say Hello</Button>
               </a>
             )}
-            
+
             <div className="flex items-center gap-6">
               {data.phone && (
                 <div className="flex flex-col items-center gap-1">

@@ -12,7 +12,7 @@ export default function Education({ education }) {
       <div className="container mx-auto px-4 max-w-3xl">
         <Reveal>
           <div className="mb-12 text-text-muted font-mono text-sm tracking-tight">
-            // 05 — education
+            // 04 — education
           </div>
 
           <div className="relative border-l-2 border-border-subtle ml-3 md:ml-4 space-y-12 pb-4">

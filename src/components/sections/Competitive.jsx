@@ -26,7 +26,7 @@ export default function Competitive({ achievements }) {
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <Reveal>
             <div className="mb-8 text-text-muted font-mono text-sm tracking-tight">
-              // 06 — Competitive Programming
+              // 10 — Competitive Programming
             </div>
             
             <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">

@@ -15,7 +15,7 @@ export default function ExtraCurricular({ leadershipRoles }) {
         <div className="container mx-auto px-4 max-w-6xl relative z-10">
           <Reveal>
             <div className="mb-8 text-text-muted font-mono text-sm tracking-tight">
-              // 10 — Extra Curricular
+              // 11 — Extra Curricular
             </div>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-text-primary tracking-tight mb-16">
