@@ -1,10 +1,16 @@
 import React from 'react';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
-import Skills from '@/components/sections/Skills';
 import Experience from '@/components/sections/Experience';
 import Education from '@/components/sections/Education';
+import Skills from '@/components/sections/Skills';
 import Projects from '@/components/sections/Projects';
+import Research from '@/components/sections/Research';
+import Certifications from '@/components/sections/Certifications';
+import Achievements from '@/components/sections/Achievements';
+import Competitive from '@/components/sections/Competitive';
+import ExtraCurricular from '@/components/sections/ExtraCurricular';
+import References from '@/components/sections/References';
 import Contact from '@/components/sections/Contact';
 
 async function fetchCollection(collectionName) {
@@ -37,7 +43,9 @@ export default async function Home() {
     competitiveAchievements,
     publications,
     training,
-    honoursAndAwards
+    honoursAndAwards,
+    leadershipRoles,
+    academicReferences
   ] = await Promise.all([
     fetchCollection('profile'),
     fetchCollection('personalDetails'),
@@ -52,10 +60,10 @@ export default async function Home() {
     fetchCollection('competitiveAchievements'),
     fetchCollection('publications'),
     fetchCollection('training'),
-    fetchCollection('honoursAndAwards')
+    fetchCollection('honoursAndAwards'),
+    fetchCollection('leadershipRoles'),
+    fetchCollection('academicReferences')
   ]);
-
-  console.log("currentWork is " + currentWork);
 
   return (
     <div className="flex flex-col w-full">
@@ -71,10 +79,16 @@ export default async function Home() {
         training={training}
         honoursAndAwards={honoursAndAwards}
       />
-      <Skills skills={skills} />
       <Experience experience={experience} />
       <Education education={education} />
+      <Skills skills={skills} />
       <Projects projects={projects} />
+      <Research publications={publications} />
+      <Certifications training={training} />
+      <Achievements achievements={honoursAndAwards} />
+      <Competitive achievements={competitiveAchievements} />
+      <ExtraCurricular leadershipRoles={leadershipRoles} />
+      <References references={academicReferences} />
       <Contact contactInfo={contact} />
     </div>
   );

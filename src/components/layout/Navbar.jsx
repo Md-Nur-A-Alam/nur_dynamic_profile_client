@@ -26,7 +26,11 @@ export default function Navbar() {
       setScrolled(window.scrollY > 20);
       
       // Scroll spy logic
-      const sections = ['about', 'skills', 'experience', 'education', 'projects', 'contact'];
+      const sections = [
+        'about', 'experience', 'education', 'skills', 'projects', 
+        'research', 'certifications', 'achievements', 'competitive', 
+        'extracurricular', 'references', 'contact'
+      ];
       let current = '';
       
       for (const section of sections) {
@@ -48,10 +52,16 @@ export default function Navbar() {
 
   const links = [
     { name: 'About', href: '/#about', id: 'about' },
-    { name: 'Skills', href: '/#skills', id: 'skills' },
     { name: 'Experience', href: '/#experience', id: 'experience' },
     { name: 'Education', href: '/#education', id: 'education' },
+    { name: 'Skills', href: '/#skills', id: 'skills' },
     { name: 'Projects', href: '/#projects', id: 'projects' },
+    { name: 'Research', href: '/#research', id: 'research' },
+    { name: 'Certs', href: '/#certifications', id: 'certifications' },
+    { name: 'Awards', href: '/#achievements', id: 'achievements' },
+    { name: 'Arena', href: '/#competitive', id: 'competitive' },
+    { name: 'Activities', href: '/#extracurricular', id: 'extracurricular' },
+    { name: 'Refs', href: '/#references', id: 'references' },
     { name: 'Contact', href: '/#contact', id: 'contact' },
     { name: 'Posts', href: '/posts', id: 'posts' },
   ];
@@ -69,20 +79,20 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-2 lg:gap-3 xl:gap-5 overflow-x-auto no-scrollbar max-w-[70vw]">
           {links.map((l) => (
             <Link
               key={l.name}
               href={l.href}
               className={cn(
-                "text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-accepted rounded-sm",
+                "text-[11px] lg:text-xs xl:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-accepted rounded-sm whitespace-nowrap",
                 activeSection === l.id ? "text-accent-accepted font-semibold" : "text-text-muted hover:text-text-primary"
               )}
             >
               {l.name}
             </Link>
           ))}
-          <div className="ml-2 pl-4 border-l border-border-subtle flex items-center gap-4">
+          <div className="ml-2 pl-3 lg:pl-4 border-l border-border-subtle flex items-center gap-2 lg:gap-4 shrink-0">
             <ThemeToggle />
             {session ? (
               <div className="relative">

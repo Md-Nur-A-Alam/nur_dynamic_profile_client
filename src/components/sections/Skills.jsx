@@ -1,9 +1,9 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useTransition } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip as RechartsTooltip, PieChart as RechartsPieChart, Pie as RechartsPie, Cell as RechartsCell } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Wrench, Code2, Database, LayoutTemplate, BrainCircuit, ShieldCheck, TerminalSquare, Sparkles } from 'lucide-react';
+import { Wrench, Code2, Database, LayoutTemplate, BrainCircuit, ShieldCheck, TerminalSquare, Sparkles, Loader2 } from 'lucide-react';
 
 const getIconForCategory = (cat) => {
   switch (cat.toLowerCase()) {
@@ -19,6 +19,16 @@ const getIconForCategory = (cat) => {
 
 export default function Skills({ skills }) {
   const [activeTab, setActiveTab] = useState('All');
+  const [isPending, startTransition] = useTransition();
+  const [loadingTab, setLoadingTab] = useState(null);
+
+  const handleTabChange = (tab) => {
+    if (tab === activeTab) return;
+    setLoadingTab(tab);
+    startTransition(() => {
+      setActiveTab(tab);
+    });
+  };
 
   const categories = useMemo(() => {
     if (!skills) return [];
@@ -80,15 +90,20 @@ export default function Skills({ skills }) {
               <div className="flex flex-wrap items-center gap-3 md:gap-4">
                 {allTabs.map(tab => {
                   const isActive = activeTab === tab;
+                  const isLoading = isPending && loadingTab === tab;
                   return (
                     <button
                       key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`px-5 py-2.5 rounded-lg font-mono text-sm tracking-wide transition-all duration-300 border ${isActive
+                      onClick={() => handleTabChange(tab)}
+                      disabled={isPending}
+                      className={`px-5 py-2.5 rounded-lg font-mono text-sm tracking-wide transition-all duration-300 border flex items-center justify-center gap-2 ${
+                        isLoading ? 'opacity-70 cursor-not-allowed' : ''
+                      } ${isActive
                           ? 'bg-accent-pending text-bg-base border-accent-pending font-semibold shadow-[0_0_15px_rgba(252,211,77,0.3)]'
-                          : 'bg-bg-surface/50 text-text-muted border-border-subtle hover:border-accent-pending/50 hover:text-text-primary'
+                          : 'bg-bg-surface/50 text-text-muted border-border-subtle hover:border-accent-pending/50 hover:text-text-primary disabled:hover:border-border-subtle'
                         }`}
                     >
+                      {isLoading && <Loader2 size={14} className="animate-spin" />}
                       {tab}
                     </button>
                   );
